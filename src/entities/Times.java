@@ -7,6 +7,7 @@ package entities;
 
 import database.DataBase;
 import java.util.List;
+import util.Io;
 
 /**
  *
@@ -42,33 +43,103 @@ public class Times extends ABranch{
     public int getCloseTime(){return this.close;}
 
     @Override
+    public DataBase create() throws Exception{
+        if(!this.validate()){
+            this.database.times.add(this);
+        }else
+            throw new Exception("The time already exists for this branch");
+        return this.database;
+    }
+
+    @Override
+    public void read() throws Exception{
+        try{
+            for(Times row : this.database.times){
+                Io.escribir("IdCompany: " + row.idCompany + 
+                        ", idBranch: " + row.idBranch +
+                        ", idTime: "+ row.idHorario+
+                        ", Day of the week: "+ row.day+
+                        ", Open from: "+ row.open+
+                        ", To: "+ row.close);
+            }
+        }catch(Exception ex){
+            throw ex;
+        }
+    }
+
+    @Override
+    public void read(ACompany element) throws Exception{
+        boolean founded = false;
+        if(element instanceof Phone){
+            for(Times row : this.database.times){
+                if(((Times)element).idCompany == row.idCompany &&
+                        ((Times)element).idBranch == row.idBranch &&
+                        ((Times)element).idHorario == row.idHorario){
+                    Io.escribir("IdCompany: " + row.idCompany + 
+                        ", idBranch: " + row.idBranch +
+                        ", idTime: "+ row.idHorario+
+                        ", Day of the week: "+ row.day+
+                        ", Open from: "+ row.open+
+                        ", To: "+ row.close);
+                    founded = true;
+                    break;
+                }
+            }
+            if(!founded)
+                throw new Exception("The elemnt doesn't exists in the database");
+        }
+        else
+            throw new Exception("The element that you are looking for isnt a Company Element!");
+    }
+
+    @Override
+    public DataBase update() throws Exception{
+        boolean founded = false;
+        if(this.validate()){
+            for(Times row : this.database.times){
+                if(row.idCompany == this.idCompany &&
+                        row.idBranch == this.idBranch &&
+                        row.idHorario == this.idHorario){
+                    row = this;
+                    founded = true;
+                    break;
+                }
+            }
+            if(!founded)
+                throw new Exception("The element that you are looking doesnt exists in the database");
+        }else
+            throw new Exception("The time doesn't exists");
+        return this.database;
+    }
+
+    @Override
+    public DataBase delete() throws Exception{
+        boolean founded = false;
+        if(this.validate()){
+            for(Times row : this.database.times){
+                if(row.idCompany == this.idCompany &&
+                        row.idBranch == this.idBranch &&
+                        row.idHorario == this.idHorario){
+                    this.database.times.remove(this);
+                    break;
+                }
+            }
+            if(!founded)
+                throw new Exception("The element that you are looking doesnt exists in the database");
+        }else
+            throw new Exception("The time doesn't exists");
+        return this.database;
+    }
+
+    @Override
     protected boolean validate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public DataBase create() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void read() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void read(ACompany element) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public DataBase update() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public DataBase delete() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(Times row : this.database.times){
+            if(row.idCompany == this.idCompany &&
+                    row.idBranch == this.idBranch &&
+                    row.idHorario == this.idHorario)
+                return true;
+        }
+        return false;
     }
     
     
