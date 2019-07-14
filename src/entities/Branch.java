@@ -7,6 +7,7 @@ package entities;
 
 import database.DataBase;
 import java.util.List;
+import util.Io;
 
 /**
  *
@@ -34,27 +35,87 @@ public class Branch extends ABranch{
 
     @Override
     public DataBase create() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(!this.validate()){
+            this.database.branches.add(this);
+        }else
+            throw new Exception("The branch already exists");
+        return this.database;
     }
 
     @Override
     public void read() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            for(Branch row : this.database.branches){
+                Io.write("CompanyId: " + row.idCompany + 
+                        ", BranchId: " + row.idBranch + 
+                        ", State: " + row.state +
+                        ", City: " + row.city +
+                        ", Town: " + row.town +
+                        ", Street: "+ row.street);
+            }
+        }catch(Exception ex){
+            throw ex;
+        }
     }
 
     @Override
     public void read(ACompany element) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean founded = false;
+        if(element instanceof Branch){
+            for(Branch row : this.database.branches){
+                if(((Branch)element).idCompany == row.idCompany &&
+                    ((Branch)element).idBranch == row.idBranch){
+                    Io.write("CompanyId: " + row.idCompany + 
+                        ", BranchId: " + row.idBranch + 
+                        ", State: " + row.state +
+                        ", City: " + row.city +
+                        ", Town: " + row.town +
+                        ", Street: "+ row.street);
+                    founded = true;
+                    break;
+                }
+            }
+            if(!founded)
+                throw new Exception("The elemnt doesn't exists in the database");
+        }
+        else
+            throw new Exception("The element that you are looking for isnt a Company Element!");
     }
 
     @Override
     public DataBase update() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean founded = false;
+        if(this.validate()){
+            for(Branch row : this.database.branches){
+                if(row.idCompany == this.idCompany &&
+                        row.idBranch == this.idBranch){
+                    row = this;
+                    founded = true;
+                    break;
+                }
+            }
+            if(!founded)
+                throw new Exception("The element that you are looking doesnt exists in the database");
+        }else
+            throw new Exception("The branch doesn't exists");
+        return this.database;
     }
 
     @Override
     public DataBase delete() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean founded = false;
+        if(this.validate()){
+            for(Branch row : this.database.branches){
+                if(row.idCompany == this.idCompany){
+                    this.database.branches.remove(this);
+                    break;
+                }
+            }
+            if(!founded)
+                throw new Exception("The element that you are looking doesnt exists in the database");
+        }else
+            throw new Exception("The branch doesn't exists");
+        return this.database;
     }
     
 }
