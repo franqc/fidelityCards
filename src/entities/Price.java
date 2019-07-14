@@ -36,7 +36,7 @@ public class Price extends ACompany{
     public void read() throws Exception{
         try{
             for(Price row : this.database.prices){
-                Io.escribir("IdCompany: " + row.idCompany + 
+                Io.write("IdCompany: " + row.idCompany + 
                         ", idPrice: " + row.idPrice +
                         ", Marks needed: "+ row.marks+
                         ", Price Name: "+ row.name);
@@ -53,7 +53,7 @@ public class Price extends ACompany{
             for(Price row : this.database.prices){
                 if(((Price)element).idCompany == row.idCompany &&
                         ((Price)element).idPrice == row.idPrice){
-                    Io.escribir("IdCompany: " + row.idCompany + 
+                    Io.write("IdCompany: " + row.idCompany + 
                         ", idPrice: " + row.idPrice +
                         ", Marks needed: "+ row.marks+
                         ", Price Name: "+ row.name);

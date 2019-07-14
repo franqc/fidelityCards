@@ -34,7 +34,7 @@ public class Phone extends ABranch{
     public void read() throws Exception{
         try{
             for(Phone row : this.database.phones){
-                Io.escribir("IdCompany: " + row.idCompany + 
+                Io.write("IdCompany: " + row.idCompany + 
                         ", idBranch: " + row.idBranch +
                         ", PhoneNumber: "+ row.phoneNumber+
                         ", Description: "+ row.phoneName);
@@ -51,7 +51,7 @@ public class Phone extends ABranch{
             for(Phone row : this.database.phones){
                 if(((Phone)element).idCompany == row.idCompany &&
                         ((Phone)element).idBranch == row.idBranch){
-                    Io.escribir("IdCompany: " + row.idCompany + 
+                    Io.write("IdCompany: " + row.idCompany + 
                         ", idBranch: " + row.idBranch +
                         ", PhoneNumber: "+ row.phoneNumber+
                         ", Description: "+ row.phoneName);

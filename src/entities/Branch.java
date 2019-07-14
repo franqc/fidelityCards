@@ -46,7 +46,7 @@ public class Branch extends ABranch{
     public void read() throws Exception {
         try{
             for(Branch row : this.database.branches){
-                Io.escribir("CompanyId: " + row.idCompany + 
+                Io.write("CompanyId: " + row.idCompany + 
                         ", BranchId: " + row.idBranch + 
                         ", State: " + row.state +
                         ", City: " + row.city +
@@ -65,7 +65,7 @@ public class Branch extends ABranch{
             for(Branch row : this.database.branches){
                 if(((Branch)element).idCompany == row.idCompany &&
                     ((Branch)element).idBranch == row.idBranch){
-                    Io.escribir("CompanyId: " + row.idCompany + 
+                    Io.write("CompanyId: " + row.idCompany + 
                         ", BranchId: " + row.idBranch + 
                         ", State: " + row.state +
                         ", City: " + row.city +

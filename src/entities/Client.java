@@ -36,7 +36,7 @@ public class Client extends AClient{
     public void read() throws Exception{
         try{
             for(Client row : this.database.clients){
-                Io.escribir("IdCompany: " + row.idCompany + 
+                Io.write("IdCompany: " + row.idCompany + 
                         ", idClient: " + row.idClient +
                         ", Name: "+ row.name+
                         ", Last Name: "+ row.lastName+
@@ -55,7 +55,7 @@ public class Client extends AClient{
             for(Client row : this.database.clients){
                 if(((Client)element).idCompany == row.idCompany &&
                         ((Client)element).idClient == row.idClient){
-                    Io.escribir("IdCompany: " + row.idCompany + 
+                    Io.write("IdCompany: " + row.idCompany + 
                         ", idClient: " + row.idClient +
                         ", Name: "+ row.name+
                         ", Last Name: "+ row.lastName+

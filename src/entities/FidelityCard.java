@@ -35,7 +35,7 @@ public class FidelityCard extends AClient{
     public void read() throws Exception{
         try{
             for(FidelityCard row : this.database.cards){
-                Io.escribir("IdCompany: " + row.idCompany + 
+                Io.write("IdCompany: " + row.idCompany + 
                         ", idClient: " + row.idClient +
                         ", idCard: "+ row.idCard+
                         ", idPrice: "+ row.idPrice+
@@ -54,7 +54,7 @@ public class FidelityCard extends AClient{
                 if(((FidelityCard)element).idCompany == row.idCompany &&
                         ((FidelityCard)element).idClient == row.idClient &&
                         ((FidelityCard)element).idCard == row.idCard){
-                    Io.escribir("IdCompany: " + row.idCompany + 
+                    Io.write("IdCompany: " + row.idCompany + 
                         ", idClient: " + row.idClient +
                         ", idCard: "+ row.idCard+
                         ", idPrice: "+ row.idPrice+

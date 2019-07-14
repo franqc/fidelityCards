@@ -55,7 +55,7 @@ public class Times extends ABranch{
     public void read() throws Exception{
         try{
             for(Times row : this.database.times){
-                Io.escribir("IdCompany: " + row.idCompany + 
+                Io.write("IdCompany: " + row.idCompany + 
                         ", idBranch: " + row.idBranch +
                         ", idTime: "+ row.idHorario+
                         ", Day of the week: "+ row.day+
@@ -75,7 +75,7 @@ public class Times extends ABranch{
                 if(((Times)element).idCompany == row.idCompany &&
                         ((Times)element).idBranch == row.idBranch &&
                         ((Times)element).idHorario == row.idHorario){
-                    Io.escribir("IdCompany: " + row.idCompany + 
+                    Io.write("IdCompany: " + row.idCompany + 
                         ", idBranch: " + row.idBranch +
                         ", idTime: "+ row.idHorario+
                         ", Day of the week: "+ row.day+

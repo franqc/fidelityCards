@@ -34,7 +34,7 @@ public class Company extends ACompany{
     public void read() throws Exception{
         try{
             for(Company row : this.database.companies){
-                Io.escribir("Id: " + row.idCompany + 
+                Io.write("Id: " + row.idCompany + 
                         ", Name: " + row.name +
                         ", WebPage: "+ row.webPage);
             }
@@ -49,7 +49,7 @@ public class Company extends ACompany{
         if(element instanceof Company){
             for(Company row : this.database.companies){
                 if(((Company)element).idCompany == row.idCompany){
-                    Io.escribir("Id: " + row.idCompany + 
+                    Io.write("Id: " + row.idCompany + 
                             ", Name: " + row.name +
                             ", WebPage: "+ row.webPage);
                     founded = true;
