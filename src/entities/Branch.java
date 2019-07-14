@@ -24,7 +24,12 @@ public class Branch extends ABranch{
 
     @Override
     protected boolean validate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(Branch branch : this.database.branches){
+            if(branch.idCompany == this.idCompany &&
+                    branch.idBranch == this.idBranch)
+                return true;
+        }
+        return false;
     }
 
     @Override
