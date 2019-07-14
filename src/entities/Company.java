@@ -33,8 +33,10 @@ public class Company extends ACompany{
     @Override
     public void read() throws Exception{
         try{
-            for(Company company : this.database.companies){
-                Io.escribir("Id: " + company.idCompany + ", Name: " + company.name +", WebPage: "+ company.webPage);
+            for(Company row : this.database.companies){
+                Io.escribir("Id: " + row.idCompany + 
+                        ", Name: " + row.name +
+                        ", WebPage: "+ row.webPage);
             }
         }catch(Exception ex){
             throw ex;
@@ -45,9 +47,11 @@ public class Company extends ACompany{
     public void read(ACompany element) throws Exception{
         boolean founded = false;
         if(element instanceof Company){
-            for(Company company : this.database.companies){
-                if(((Company)element).idCompany == company.idCompany){
-                    Io.escribir("Id: " + company.idCompany + ", Name: " + company.name +", WebPage: "+ company.webPage);
+            for(Company row : this.database.companies){
+                if(((Company)element).idCompany == row.idCompany){
+                    Io.escribir("Id: " + row.idCompany + 
+                            ", Name: " + row.name +
+                            ", WebPage: "+ row.webPage);
                     founded = true;
                     break;
                 }
@@ -63,9 +67,9 @@ public class Company extends ACompany{
     public DataBase update() throws Exception{
         boolean founded = false;
         if(this.validate()){
-            for(Company company : this.database.companies){
-                if(company.idCompany == this.idCompany){
-                    company = this;
+            for(Company row : this.database.companies){
+                if(row.idCompany == this.idCompany){
+                    row = this;
                     founded = true;
                     break;
                 }
@@ -81,8 +85,8 @@ public class Company extends ACompany{
     public DataBase delete() throws Exception{
         boolean founded = false;
         if(this.validate()){
-            for(Company company : this.database.companies){
-                if(company.idCompany == this.idCompany){
+            for(Company row : this.database.companies){
+                if(row.idCompany == this.idCompany){
                     this.database.companies.remove(this);
                     break;
                 }
