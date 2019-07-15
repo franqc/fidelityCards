@@ -88,6 +88,7 @@ public class Company extends ACompany{
             for(Company row : this.database.companies){
                 if(row.idCompany == this.idCompany){
                     this.database.companies.remove(this);
+                    founded = true;
                     break;
                 }
             }

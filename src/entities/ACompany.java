@@ -15,6 +15,7 @@ public abstract class ACompany implements Crudable{
     protected int idCompany;
     protected abstract boolean validate();
     public ACompany(DataBase database){
+        this.database = new DataBase("");
         this.database = database;
     }
 }

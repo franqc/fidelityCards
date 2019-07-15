@@ -121,6 +121,7 @@ public class Times extends ABranch{
                         row.idBranch == this.idBranch &&
                         row.idHorario == this.idHorario){
                     this.database.times.remove(this);
+                    founded = true;
                     break;
                 }
             }

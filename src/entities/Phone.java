@@ -93,6 +93,7 @@ public class Phone extends ABranch{
                 if(row.idCompany == this.idCompany &&
                         row.idBranch == this.idBranch){
                     this.database.phones.remove(this);
+                    founded = true;
                     break;
                 }
             }

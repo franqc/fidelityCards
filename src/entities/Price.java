@@ -95,6 +95,7 @@ public class Price extends ACompany{
                 if(row.idCompany == this.idCompany &&
                         row.idPrice == this.idPrice){
                     this.database.prices.remove(this);
+                    founded = true;
                     break;
                 }
             }

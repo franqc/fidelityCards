@@ -108,6 +108,7 @@ public class Branch extends ABranch{
             for(Branch row : this.database.branches){
                 if(row.idCompany == this.idCompany){
                     this.database.branches.remove(this);
+                    founded = true;
                     break;
                 }
             }

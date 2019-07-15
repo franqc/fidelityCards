@@ -99,6 +99,7 @@ public class Client extends AClient{
                 if(row.idCompany == this.idCompany &&
                         row.idClient == this.idClient){
                     this.database.clients.remove(this);
+                    founded = true;
                     break;
                 }
             }

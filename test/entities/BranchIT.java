@@ -6,6 +6,8 @@
 package entities;
 
 import database.DataBase;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,6 +21,7 @@ import static org.junit.Assert.*;
  */
 public class BranchIT {
     
+    
     public BranchIT() {
     }
     
@@ -30,12 +33,21 @@ public class BranchIT {
     public static void tearDownClass() {
     }
     
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+    private final PrintStream originalErr = System.err;
+
     @Before
-    public void setUp() {
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
     }
-    
+
     @After
-    public void tearDown() {
+    public void restoreStreams() {
+        System.setOut(originalOut);
+        System.setErr(originalErr);
     }
 
     /**
@@ -44,12 +56,17 @@ public class BranchIT {
     @Test
     public void testValidate() {
         System.out.println("validate");
-        Branch instance = null;
+        DataBase database = new DataBase("fidelityDatabase");
+        Branch instance = new Branch(database);
         boolean expResult = false;
+        instance.idCompany = 1;
+        instance.idBranch = 1;
+        instance.state = "San Jose";
+        instance.city = "Central";
+        instance.town = "Paseo Colon";
+        instance.street = "Contiguo al edificio Mercedes";
         boolean result = instance.validate();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -58,12 +75,28 @@ public class BranchIT {
     @Test
     public void testCreate() throws Exception {
         System.out.println("create");
-        Branch instance = null;
-        DataBase expResult = null;
-        DataBase result = instance.create();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        DataBase resultDatabase = new DataBase("testDatabase");
+        
+        Branch instance = new Branch(resultDatabase);
+        instance.idCompany = 1;
+        instance.idBranch = 1;
+        instance.state = "San Jose";
+        instance.city = "Central";
+        instance.town = "Paseo Colon";
+        instance.street = "Contiguo al edificio Mercedes";
+        resultDatabase = instance.create();
+        
+        DataBase expectedDatabase = new DataBase("testDatabase");
+        
+        expectedDatabase.branches.add(instance);
+        
+        int expected = expectedDatabase.branches.get(0).idCompany + 
+                expectedDatabase.branches.get(0).idBranch;
+        
+        int result = resultDatabase.branches.get(0).idCompany +
+                resultDatabase.branches.get(0).idBranch;
+        
+        assertEquals(expected, result);
     }
 
     /**
@@ -71,11 +104,29 @@ public class BranchIT {
      */
     @Test
     public void testRead_0args() throws Exception {
-        System.out.println("read");
-        Branch instance = null;
+        String expected = "CompanyId: " + 1 + 
+                        ", BranchId: " + 1 + 
+                        ", State: " + "San Jose" +
+                        ", City: " + "Central" +
+                        ", Town: " + "Paseo Colon" +
+                        ", Street: "+ "Contiguo al edificio Mercedes";
+        
+        DataBase resultDatabase = new DataBase("testDatabase");
+        
+        Branch instance = new Branch(resultDatabase);
+        instance.idCompany = 1;
+        instance.idBranch = 1;
+        instance.state = "San Jose";
+        instance.city = "Central";
+        instance.town = "Paseo Colon";
+        instance.street = "Contiguo al edificio Mercedes";
+        
+        resultDatabase = instance.create();
+        
         instance.read();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String result = outContent.toString();
+        
+        assertEquals(expected.trim().toLowerCase(), result.trim().toLowerCase());
     }
 
     /**
@@ -83,12 +134,38 @@ public class BranchIT {
      */
     @Test
     public void testRead_ACompany() throws Exception {
-        System.out.println("read");
-        ACompany element = null;
-        Branch instance = null;
-        instance.read(element);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expected = "CompanyId: " + 1 + 
+                        ", BranchId: " + 1 + 
+                        ", State: " + "San Jose" +
+                        ", City: " + "Central" +
+                        ", Town: " + "Paseo Colon" +
+                        ", Street: "+ "Contiguo al edificio Mercedes";
+        
+        DataBase resultDatabase = new DataBase("testDatabase");
+        
+        Branch instance = new Branch(resultDatabase);
+        instance.idCompany = 1;
+        instance.idBranch = 1;
+        instance.state = "San Jose";
+        instance.city = "Central";
+        instance.town = "Paseo Colon";
+        instance.street = "Contiguo al edificio Mercedes";
+        resultDatabase = instance.create();
+        
+        Branch newInstance = new Branch(resultDatabase);
+        newInstance.idCompany = 1;
+        newInstance.idBranch = 2;
+        newInstance.state = "Heredia";
+        newInstance.city = "Flores";
+        newInstance.town = "San Roque";
+        newInstance.street = "Frente al mini super la conciencia";
+        resultDatabase = newInstance.create();
+        
+        instance.read(instance);
+        
+        String result = outContent.toString();
+        
+        assertEquals(expected.trim().toLowerCase(), result.trim().toLowerCase());
     }
 
     /**
@@ -97,12 +174,25 @@ public class BranchIT {
     @Test
     public void testUpdate() throws Exception {
         System.out.println("update");
-        Branch instance = null;
-        DataBase expResult = null;
-        DataBase result = instance.update();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        DataBase resultDatabase = new DataBase("testDatabase");
+        
+        Branch instance = new Branch(resultDatabase);
+        instance.idCompany = 1;
+        instance.idBranch = 1;
+        instance.state = "San Jose";
+        instance.city = "Central";
+        instance.town = "Paseo Colon";
+        instance.street = "Contiguo al edificio Mercedes";
+        resultDatabase = instance.create();
+        
+        instance.street = "Frente al banco Nacional";
+        resultDatabase = instance.update();
+        
+        String expected = instance.street;
+        
+        String result = resultDatabase.branches.get(0).street;
+        
+        assertEquals(expected, result);
     }
 
     /**
@@ -110,13 +200,36 @@ public class BranchIT {
      */
     @Test
     public void testDelete() throws Exception {
-        System.out.println("delete");
-        Branch instance = null;
-        DataBase expResult = null;
-        DataBase result = instance.delete();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expected = "CompanyId: " + 1 + 
+                        ", BranchId: " + 1 + 
+                        ", State: " + "San Jose" +
+                        ", City: " + "Central" +
+                        ", Town: " + "Paseo Colon" +
+                        ", Street: "+ "Contiguo al edificio Mercedes";
+        
+        DataBase resultDatabase = new DataBase("testDatabase");
+        
+        Branch instance = new Branch(resultDatabase);
+        instance.idCompany = 1;
+        instance.idBranch = 1;
+        instance.state = "San Jose";
+        instance.city = "Central";
+        instance.town = "Paseo Colon";
+        instance.street = "Contiguo al edificio Mercedes";
+        resultDatabase = instance.create();
+        
+        Branch newInstance = new Branch(resultDatabase);
+        newInstance.idCompany = 1;
+        newInstance.idBranch = 2;
+        newInstance.state = "Heredia";
+        newInstance.city = "Flores";
+        newInstance.town = "San Roque";
+        newInstance.street = "Frente al mini super la conciencia";
+        resultDatabase = newInstance.create();
+        
+        resultDatabase = newInstance.delete();
+        
+        assertEquals(1,resultDatabase.branches.size());
     }
     
 }

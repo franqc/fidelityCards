@@ -99,6 +99,7 @@ public class FidelityCard extends AClient{
                         row.idClient == this.idClient &&
                         row.idCard == this.idCard){
                     this.database.cards.remove(this);
+                    founded = true;
                     break;
                 }
             }
